@@ -1,0 +1,32 @@
+--Write a plsql block using explicity cursor to calculate the total payment done
+by people for trip.
+SET SERVEROUTPUT ON
+DECLARE
+--Declare the cursor name as well as the variables to store the values from the
+emp table.
+CURSOR C3 IS SELECT packageid, packagename, packagetype, packagelocation,
+packageprice from tbltourpackages;
+vpackageid tourpackages.packageid%type;
+vempname tourpackages.empname%type;
+vpackagename tourpackages.packagename%type;
+vpackagetype tourpackages.packagetype%type;
+vpackagelocation tourpackages.packagelocation%type;
+vpackageprice tourpackages.packageprice%type;
+BEGIN
+OPEN C3;
+LOOP
+--Fetch the values from the created cursor to the created variables.
+FETCH C3 INTO
+vpackageid,vpackagename,vpackagetype,vpackagelocation,vpackageprice;
+EXIT WHEN C3%NOTFOUND;
+--create an new emp2 table where we insert the values from emp and after you
+update them.
+INSERT INTO Tp2
+VALUES(vpackageid,vpackagename,vpackagetype,vpackagelocation,vpackageprice);
+--The code used to update the new tp2 table successfully.
+UPDATE tp2 SET price = packageprice*n;
+END LOOP;
+EXCEPTION
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('There is a certain error in your code ');
+END;

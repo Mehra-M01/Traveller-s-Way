@@ -1,0 +1,7 @@
+set serveroutput on;
+set verify off;
+create or replace trigger trig_travel
+after insert or update on travel
+begin
+dbms_output.put_line('Your trip is booked');
+end;
